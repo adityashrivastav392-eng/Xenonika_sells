@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xenonika Store</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #0b0f19;
+            color: #ffffff;
+        }
+
+        /* Header & Navigation */
+        header {
+            background: linear-gradient(135deg, #0d1b2a, #1b263b);
+            padding: 15px 20px;
+            text-align: center;
+            border-bottom: 2px solid #415a77;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: bold;
+            color: #00d4ff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .tagline {
+            font-size: 13px;
+            color: #e0e1dd;
+            margin-top: 4px;
+        }
+
+        /* Stores Navigation Bar */
+        .store-bar {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding: 12px 15px;
+            background-color: #101726;
+            border-bottom: 1px solid #1b263b;
+        }
+
+        .store-btn {
+            background-color: #1b263b;
+            color: #00d4ff;
+            border: 1px solid #415a77;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            white-space: nowrap;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .store-btn.active, .store-btn:hover {
+            background-color: #00d4ff;
+            color: #0b0f19;
+        }
+
+        /* Categories Bar */
+        .category-bar {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding: 10px 15px;
+            background-color: #0d111a;
+        }
+
+        .cat-btn {
+            background-color: transparent;
+            color: #e0e1dd;
+            border: 1px solid #2b3a4e;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            white-space: nowrap;
+            font-size: 13px;
+        }
+
+        .cat-btn.active, .cat-btn:hover {
+            border-color: #00d4ff;
+            color: #00d4ff;
+        }
+
+        /* Product List Layout */
+        .container {
+            padding: 15px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .product-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .product-card {
+            background-color: #131c2e;
+            border: 1px solid #1e2d42;
+            border-radius: 10px;
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .product-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .product-logo {
+            width: 55px;
+            height: 55px;
+            object-fit: cover;
+            border-radius: 8px;
+            background-color: #1b263b;
+        }
+
+        .product-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .buy-btn {
+            background: linear-gradient(90deg, #00d4ff, #0077b6);
+            color: #ffffff;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            white-space: nowrap;
+            font-size: 13px;
+        }
+
+        .buy-btn:hover {
+            opacity: 0.9;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 30px;
+            color: #00d4ff;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">Xenonika Store</div>
+        <div class="tagline">sasta kharido, achcha kharido, trusted kharido</div>
+    </header>
+
+    <!-- Top Stores Bar -->
+    <div class="store-bar">
+        <button class="store-btn active" onclick="selectStore('all', this)">All Stores</button>
+        <button class="store-btn" onclick="selectStore('amazon', this)">Amazon</button>
+        <button class="store-btn" onclick="selectStore('flipkart', this)">Flipkart</button>
+        <button class="store-btn" onclick="selectStore('ajio', this)">Ajio</button>
+        <button class="store-btn" onclick="selectStore('meesho', this)">Meesho</button>
+    </div>
+
+    <!-- Categories Bar -->
+    <div class="category-bar">
+        <button class="cat-btn active" onclick="selectCategory('all', this)">All</button>
+        <button class="cat-btn" onclick="selectCategory('mens', this)">Men's</button>
+        <button class="cat-btn" onclick="selectCategory('womens', this)">Women's</button>
+        <button class="cat-btn" onclick="selectCategory('electronics', this)">Electronics</button>
+        <button class="cat-btn" onclick="selectCategory('accessories', this)">Accessories</button>
+        <button class="cat-btn" onclick="selectCategory('jewellery', this)">Jewellery</button>
+    </div>
+
+    <div class="container">
+        <div id="productContainer" class="product-list">
+            <div class="loading">Loading Products...</div>
+        </div>
+    </div>
+
+    <script>
+        const FIREBASE_URL = "https://kayasth-vision-c664a-default-rtdb.firebaseio.com/products.json";
+
+        let allProducts = [];
+        let currentStore = 'all';
+        let currentCategory = 'all';
+
+        // Fetch Data via Firebase REST API
+        async function fetchProducts() {
+            try {
+                const response = await fetch(FIREBASE_URL);
+                const data = await response.json();
+                
+                allProducts = [];
+                if (data) {
+                    Object.keys(data).forEach(key => {
+                        allProducts.push({ id: key, ...data[key] });
+                    });
+                }
+                renderProducts();
+            } catch (error) {
+                console.error("Error fetching products:", error);
+                document.getElementById('productContainer').innerHTML = '<div class="loading">Failed to load products.</div>';
+            }
+        }
+
+        // Render Filtered Products
+        function renderProducts() {
+            const container = document.getElementById('productContainer');
+            container.innerHTML = '';
+
+            const filtered = allProducts.filter(item => {
+                const matchesStore = (currentStore === 'all' || item.store === currentStore);
+                const matchesCat = (currentCategory === 'all' || item.category === currentCategory);
+                return matchesStore && matchesCat;
+            });
+
+            if (filtered.length === 0) {
+                container.innerHTML = '<div class="loading">No products found.</div>';
+                return;
+            }
+
+            filtered.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.innerHTML = `
+                    <div class="product-left">
+                        <img src="${item.logo || 'https://via.placeholder.com/55'}" alt="Logo" class="product-logo">
+                        <div class="product-title">${item.title}</div>
+                    </div>
+                    <a href="${item.buyUrl}" target="_blank" class="buy-btn">BUY NOW</a>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function selectStore(store, btn) {
+            document.querySelectorAll('.store-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentStore = store;
+            renderProducts();
+        }
+
+        function selectCategory(cat, btn) {
+            document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentCategory = cat;
+            renderProducts();
+        }
+
+        // Initial Load
+        fetchProducts();
+    </script>
+</body>
+  </html>
+  
