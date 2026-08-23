@@ -21,7 +21,7 @@
         /* Header & Navigation */
         header {
             background: linear-gradient(135deg, #0d1b2a, #1b263b);
-            padding: 20px 15px;
+            padding: 20px 20px;
             text-align: center;
             border-bottom: 2px solid #1f314d;
             position: sticky;
@@ -31,7 +31,7 @@
         }
 
         .logo {
-            font-size: 28px;
+            font-size: 30px;
             font-weight: 800;
             color: #00d4ff;
             text-transform: uppercase;
@@ -39,43 +39,50 @@
         }
 
         .tagline {
-            font-size: 13px;
+            font-size: 14px;
             color: #a0aec0;
             margin-top: 6px;
             font-weight: 500;
             letter-spacing: 0.5px;
         }
 
+        /* Container Limit for Large Screens */
+        .wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 10px 15px;
+        }
+
         /* Section Titles */
         .section-title {
-            font-size: 14px;
+            font-size: 15px;
             color: #63b3ed;
-            margin: 15px 15px 8px 15px;
+            margin: 20px 0 10px 0;
             text-transform: uppercase;
             letter-spacing: 1px;
             font-weight: bold;
         }
 
-        /* Stores Navigation Bar - Bada aur Behtar */
+        /* Stores Navigation Bar - Grid & Full Stretch */
         .store-bar {
             display: flex;
+            flex-wrap: wrap; /* पूरी स्क्रीन में फैलने के लिए */
             gap: 12px;
-            overflow-x: auto;
-            padding: 10px 15px 15px 15px;
+            padding: 10px;
             background-color: #0b111e;
-            scrollbar-width: none; /* Hide scrollbar for clean look */
-        }
-
-        .store-bar::-webkit-scrollbar {
-            display: none;
+            border-radius: 12px;
+            border: 1px solid #1a273a;
         }
 
         .store-btn {
+            flex: 1 1 calc(20% - 12px); /* 5 बटन्स को पूरी लाइन में फैलाता है */
+            min-width: 140px; /* मोबाइल में ख़राब न दिखे */
+            text-align: center;
             background: linear-gradient(145deg, #131c2e, #1b263b);
             color: #ffffff;
             border: 2px solid #2a3f5f;
-            padding: 12px 22px;
-            border-radius: 30px;
+            padding: 14px 18px;
+            border-radius: 10px;
             cursor: pointer;
             white-space: nowrap;
             font-weight: bold;
@@ -92,29 +99,29 @@
             box-shadow: 0 6px 12px rgba(0, 212, 255, 0.3);
         }
 
-        /* Categories Bar */
+        /* Categories Bar - Full Stretch */
         .category-bar {
             display: flex;
+            flex-wrap: wrap; /* पूरी चौड़ाई में फैलाव */
             gap: 10px;
-            overflow-x: auto;
-            padding: 10px 15px;
-            background-color: #070913;
-            scrollbar-width: none;
-        }
-
-        .category-bar::-webkit-scrollbar {
-            display: none;
+            padding: 10px;
+            background-color: #0b111e;
+            border-radius: 12px;
+            border: 1px solid #1a273a;
         }
 
         .cat-btn {
+            flex: 1 1 calc(16% - 10px); /* सभी कैटेगरीज बराबर में फैल जाएंगी */
+            min-width: 110px;
+            text-align: center;
             background-color: #101726;
             color: #cbd5e0;
             border: 1px solid #1e2d42;
-            padding: 8px 16px;
+            padding: 10px 14px;
             border-radius: 8px;
             cursor: pointer;
             white-space: nowrap;
-            font-size: 13px;
+            font-size: 14px;
             font-weight: 600;
             transition: 0.2s;
         }
@@ -126,12 +133,6 @@
         }
 
         /* Product List Layout */
-        .container {
-            padding: 10px 15px;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
         .product-list {
             display: flex;
             flex-direction: column;
@@ -143,7 +144,7 @@
             background: linear-gradient(135deg, #101726, #131c2e);
             border: 1px solid #1e2d42;
             border-radius: 12px;
-            padding: 14px;
+            padding: 16px 20px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -153,13 +154,13 @@
         }
 
         .product-card:hover {
-            border-color: #2a4365;
+            border-color: #00d4ff;
         }
 
         .product-left {
             display: flex;
             align-items: center;
-            gap: 14px;
+            gap: 16px;
             overflow: hidden;
         }
 
@@ -176,11 +177,11 @@
         .product-info {
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: 5px;
         }
 
         .product-title {
-            font-size: 15px;
+            font-size: 16px;
             font-weight: 600;
             color: #ffffff;
             line-height: 1.3;
@@ -198,13 +199,13 @@
             background: linear-gradient(90deg, #00d4ff, #0077b6);
             color: #ffffff;
             border: none;
-            padding: 10px 20px;
+            padding: 12px 24px;
             border-radius: 8px;
             font-weight: bold;
             cursor: pointer;
             text-decoration: none;
             white-space: nowrap;
-            font-size: 13px;
+            font-size: 14px;
             box-shadow: 0 4px 10px rgba(0, 212, 255, 0.2);
             transition: 0.2s;
         }
@@ -220,6 +221,16 @@
             color: #00d4ff;
             font-size: 15px;
         }
+
+        /* Responsive Mobile Layout Adjustments */
+        @media (max-width: 768px) {
+            .store-btn {
+                flex: 1 1 calc(50% - 12px); /* मोबाइल पर 2 बटन्स प्रति लाइन */
+            }
+            .cat-btn {
+                flex: 1 1 calc(33.33% - 10px); /* मोबाइल पर 3 कैटेगरीज प्रति लाइन */
+            }
+        }
     </style>
 </head>
 <body>
@@ -229,30 +240,30 @@
         <div class="tagline">sasta kharido, achcha kharido, trusted kharido</div>
     </header>
 
-    <!-- Top Stores Bar (Bade aur Saaf Buttons) -->
-    <div class="section-title">Select Store</div>
-    <div class="store-bar">
-        <button class="store-btn active" onclick="selectStore('all', this)">⚡ All Stores</button>
-        <button class="store-btn" onclick="selectStore('amazon', this)">Amazon</button>
-        <button class="store-btn" onclick="selectStore('flipkart', this)">Flipkart</button>
-        <button class="store-btn" onclick="selectStore('ajio', this)">Ajio</button>
-        <button class="store-btn" onclick="selectStore('meesho', this)">Meesho</button>
-    </div>
+    <div class="wrapper">
+        <!-- Top Stores Bar (Full Screen Stretched) -->
+        <div class="section-title">Select Store</div>
+        <div class="store-bar">
+            <button class="store-btn active" onclick="selectStore('all', this)">⚡ All Stores</button>
+            <button class="store-btn" onclick="selectStore('amazon', this)">Amazon</button>
+            <button class="store-btn" onclick="selectStore('flipkart', this)">Flipkart</button>
+            <button class="store-btn" onclick="selectStore('ajio', this)">Ajio</button>
+            <button class="store-btn" onclick="selectStore('meesho', this)">Meesho</button>
+        </div>
 
-    <!-- Categories Bar -->
-    <div class="section-title">Categories</div>
-    <div class="category-bar">
-        <button class="cat-btn active" onclick="selectCategory('all', this)">All Items</button>
-        <button class="cat-btn" onclick="selectCategory('mens', this)">Men's</button>
-        <button class="cat-btn" onclick="selectCategory('womens', this)">Women's</button>
-        <button class="cat-btn" onclick="selectCategory('electronics', this)">Electronics</button>
-        <button class="cat-btn" onclick="selectCategory('accessories', this)">Accessories</button>
-        <button class="cat-btn" onclick="selectCategory('jewellery', this)">Jewellery</button>
-    </div>
+        <!-- Categories Bar (Full Screen Stretched) -->
+        <div class="section-title">Categories</div>
+        <div class="category-bar">
+            <button class="cat-btn active" onclick="selectCategory('all', this)">All Items</button>
+            <button class="cat-btn" onclick="selectCategory('mens', this)">Men's</button>
+            <button class="cat-btn" onclick="selectCategory('womens', this)">Women's</button>
+            <button class="cat-btn" onclick="selectCategory('electronics', this)">Electronics</button>
+            <button class="cat-btn" onclick="selectCategory('accessories', this)">Accessories</button>
+            <button class="cat-btn" onclick="selectCategory('jewellery', this)">Jewellery</button>
+        </div>
 
-    <!-- Product Container -->
-    <div class="container">
-        <div class="section-title" style="margin-left: 0;">Products</div>
+        <!-- Product Container -->
+        <div class="section-title">Products</div>
         <div id="productContainer" class="product-list">
             <div class="loading">Loading Products...</div>
         </div>
@@ -305,7 +316,7 @@
                 card.className = 'product-card';
                 card.innerHTML = `
                     <div class="product-left">
-                        <img src="${item.logo || 'https://via.placeholder.com/65'}" alt="Logo" class="product-logo">
+                        <img src="${item.logo || 'https://via.placeholder.com/65'}" alt="Logo" class="product-logo" onerror="this.src='https://via.placeholder.com/65'">
                         <div class="product-info">
                             <span class="product-store-tag">${item.store || 'Store'}</span>
                             <div class="product-title">${item.title}</div>
@@ -335,5 +346,5 @@
         fetchProducts();
     </script>
 </body>
-    </html>
-    
+</html>
+                
