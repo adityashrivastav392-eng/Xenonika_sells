@@ -3,7 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Xenonika Store</title>
+    
+    <!-- Primary Meta Tags -->
+    <title>Xenonika sells</title>
+    <meta name="title" content="Xenonika sells">
+    <meta name="description" content="sasta kharido, achcha kharido, trusted kharido - Best deals from Amazon, Flipkart, Ajio, Meesho and more.">
+
+    <!-- Favicon / Website Logo -->
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="apple-touch-icon" href="logo.png">
+
+    <!-- Open Graph / Facebook / WhatsApp Meta Tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Xenonika sells">
+    <meta property="og:description" content="sasta kharido, achcha kharido, trusted kharido">
+    <meta property="og:image" content="logo.png">
+
+    <!-- Twitter Meta Tags -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="Xenonika sells">
+    <meta property="twitter:description" content="sasta kharido, achcha kharido, trusted kharido">
+    <meta property="twitter:image" content="logo.png">
+
     <style>
         * {
             margin: 0;
@@ -28,6 +49,23 @@
             top: 0;
             z-index: 100;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .header-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .header-logo {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+            border-radius: 8px;
         }
 
         .logo {
@@ -66,7 +104,7 @@
         /* Stores Navigation Bar - Grid & Full Stretch */
         .store-bar {
             display: flex;
-            flex-wrap: wrap; /* पूरी स्क्रीन में फैलने के लिए */
+            flex-wrap: wrap;
             gap: 12px;
             padding: 10px;
             background-color: #0b111e;
@@ -75,8 +113,8 @@
         }
 
         .store-btn {
-            flex: 1 1 calc(20% - 12px); /* 5 बटन्स को पूरी लाइन में फैलाता है */
-            min-width: 140px; /* मोबाइल में ख़राब न दिखे */
+            flex: 1 1 calc(20% - 12px);
+            min-width: 140px;
             text-align: center;
             background: linear-gradient(145deg, #131c2e, #1b263b);
             color: #ffffff;
@@ -102,7 +140,7 @@
         /* Categories Bar - Full Stretch */
         .category-bar {
             display: flex;
-            flex-wrap: wrap; /* पूरी चौड़ाई में फैलाव */
+            flex-wrap: wrap;
             gap: 10px;
             padding: 10px;
             background-color: #0b111e;
@@ -111,7 +149,7 @@
         }
 
         .cat-btn {
-            flex: 1 1 calc(16% - 10px); /* सभी कैटेगरीज बराबर में फैल जाएंगी */
+            flex: 1 1 calc(16% - 10px);
             min-width: 110px;
             text-align: center;
             background-color: #101726;
@@ -225,10 +263,10 @@
         /* Responsive Mobile Layout Adjustments */
         @media (max-width: 768px) {
             .store-btn {
-                flex: 1 1 calc(50% - 12px); /* मोबाइल पर 2 बटन्स प्रति लाइन */
+                flex: 1 1 calc(50% - 12px);
             }
             .cat-btn {
-                flex: 1 1 calc(33.33% - 10px); /* मोबाइल पर 3 कैटेगरीज प्रति लाइन */
+                flex: 1 1 calc(33.33% - 10px);
             }
         }
     </style>
@@ -236,12 +274,15 @@
 <body>
 
     <header>
-        <div class="logo">Xenonika Store</div>
+        <div class="header-brand">
+            <img src="logo.png" alt="Xenonika sells Logo" class="header-logo" onerror="this.style.display='none'">
+            <div class="logo">Xenonika sells</div>
+        </div>
         <div class="tagline">sasta kharido, achcha kharido, trusted kharido</div>
     </header>
 
     <div class="wrapper">
-        <!-- Top Stores Bar (Full Screen Stretched) -->
+        <!-- Top Stores Bar -->
         <div class="section-title">Select Store</div>
         <div class="store-bar">
             <button class="store-btn active" onclick="selectStore('all', this)">⚡ All Stores</button>
@@ -251,7 +292,7 @@
             <button class="store-btn" onclick="selectStore('meesho', this)">Meesho</button>
         </div>
 
-        <!-- Categories Bar (Full Screen Stretched) -->
+        <!-- Categories Bar -->
         <div class="section-title">Categories</div>
         <div class="category-bar">
             <button class="cat-btn active" onclick="selectCategory('all', this)">All Items</button>
@@ -316,7 +357,7 @@
                 card.className = 'product-card';
                 card.innerHTML = `
                     <div class="product-left">
-                        <img src="${item.logo || 'https://via.placeholder.com/65'}" alt="Logo" class="product-logo" onerror="this.src='https://via.placeholder.com/65'">
+                        <img src="${item.logo || 'logo.png'}" alt="Logo" class="product-logo" onerror="this.src='logo.png'">
                         <div class="product-info">
                             <span class="product-store-tag">${item.store || 'Store'}</span>
                             <div class="product-title">${item.title}</div>
@@ -347,4 +388,3 @@
     </script>
 </body>
 </html>
-                
